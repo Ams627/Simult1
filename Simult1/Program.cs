@@ -9,22 +9,23 @@ namespace Simult1
     class Program
     {
 
-        //private static string GetVar(int x)
-        //{
-        //    if (x == 1)
-        //    {
-        //        return "x";
-        //    }
-        //    if (x == -1)
-        //    {
-        //        return "-x";
-        //    }
-        //    return $"{x}x";
-        //}
+        private static char GetSign(int x)
+        {
+            return x < 0 ? '-' : '+';
+        }
+
+        private static string GetVar(int x)
+        {
+            if (x == 1 || x == -1)
+            {
+                return "";
+            }
+            return $"{x}";
+        }
 
         private static void PrintEqn(int a, int b, int c, int d, int m, int n, double x, double y)
         {
-            Console.WriteLine($"{a} {b} {c} {d} {m} {n}  - {x} {y}");
+            Console.WriteLine($"| {GetVar(a)}x {GetSign(b)} {GetVar(Math.Abs(b))}y = {m} | {GetVar(c)}x {GetSign(d)} {GetVar(Math.Abs(d))}y = {n}  | {x} {y}");
         }
 
         private static void Main(string[] args)
@@ -32,10 +33,13 @@ namespace Simult1
             try
             {
                 var generator = new EquationsGenerator();
+                Console.WriteLine("|===");
+
                 foreach (var (a, b, c, d, m, n, x, y) in generator.Generator().Take(100))
                 {
                     PrintEqn(a, b, c, d, m, n, x, y);
                 }
+                Console.WriteLine("|===");
             }
             catch (Exception ex)
             {
